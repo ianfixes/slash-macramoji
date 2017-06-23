@@ -8,8 +8,8 @@ var slack = slackExpress.slack;
 var slash = slackExpress.slash;
 var start = slackExpress.start;
 
-var token = process.env.SLACK_API_TOKEN;
-var web = new WebClient(token);
+var web = new WebClient(process.env.SLACK_API_TOKEN);
+var bot = new WebClient(process.env.SLACK_BOT_TOKEN);
 
 emojiFetchFn = function (callback) {
     return web.emoji.list(function (err, result) {
@@ -49,7 +49,7 @@ function uploadFile(slackResp, channel) {
             channels: channel,
         };
 
-        web.files.upload(fileName, streamOpts, function handleStreamFileUpload(err, res) {
+        bot.files.upload(fileName, streamOpts, function handleStreamFileUpload(err, res) {
             console.log(res);
         });
     });
