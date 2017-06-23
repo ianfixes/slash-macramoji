@@ -4,7 +4,7 @@
   "description": "Slack slash-command app for macramoji",
   "main": "index.js",
   "scripts": {
-    "start": "node index",
+    "start": "node express",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
