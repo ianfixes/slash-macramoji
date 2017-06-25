@@ -4,10 +4,6 @@ var macramoji = require('macramoji');
 var slackExpress = require("slack-express");
 var WebClient = require('@slack/client').WebClient;
 
-var slack = slackExpress.slack;
-var slash = slackExpress.slash;
-var start = slackExpress.start;
-
 var web = new WebClient(process.env.SLACK_API_TOKEN);
 var bot = new WebClient(process.env.SLACK_BOT_TOKEN);
 
@@ -56,7 +52,7 @@ function uploadFile(slackResp, channel) {
 }
 
 
-slash('/macramoji', function (payload, message) {
+slackExpress.slash('/macramoji', function (payload, message) {
     console.log("OK! " + JSON.stringify(payload, null, 2));
     // payload recieved as a POST from Slack command issued
     let cmd = payload.raw.command
@@ -81,4 +77,4 @@ slash('/macramoji', function (payload, message) {
 
 });
 
-start();
+slackExpress.start();
