@@ -4,7 +4,8 @@
   "description": "Slack slash-command app for macramoji",
   "main": "index.js",
   "scripts": {
-    "start": "node express",
+    "start_express": "node express",
+    "start_botkit": "node botkit",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
