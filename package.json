@@ -4,8 +4,10 @@
   "description": "Slack slash-command app for macramoji",
   "main": "index.js",
   "scripts": {
+    "start": "node index",
     "start_express": "node express",
     "start_botkit": "node botkit",
+    "start_slapp": "node index",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -30,6 +32,8 @@
     "botkit": "^0.5.4",
     "gm": "^1.23.0",
     "macramoji": "^0.1.5",
-    "slack-express": "^5.8.0"
+    "slack-express": "^5.8.0",
+    "slapp": "^2.4.1",
+    "slapp-context-beepboop": "^1.4.0"
   }
 }
