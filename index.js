@@ -18,23 +18,7 @@ var removeTeam = function (teamId) {
   delete teams[teamId];
 };
 
-// TODO: pagination. Our one millionth subscriber will be ignored
-teamsClient.list(0, 1000000, function (err, result) {
-  if (err) {
-    console.log("Err: " + JSON.stringify(err, null, 2));
-    process.exit(1);
-  }
-
-  if (result.results === undefined) {
-    console.log("no results: " + JSON.stringify(result, null, 2));
-    process.exit(1);
-  }
-
-  result.results.forEach(function (teamInfo) {
-    console.log("Found team " + teamInfo.slack_team_id + " - " + teamInfo.slack_team_name);
-    addTeam(teamInfo);
-  });
-
+var launchSlackApp = function () {
   // slapp stuff
   slapp.command('/macramoji', (msg, cmd) => {
     // console.log("OK macramoji! `" + cmd + "` " + JSON.stringify(Object.keys(msg), null, 2));
@@ -98,6 +82,35 @@ teamsClient.list(0, 1000000, function (err, result) {
   })
 
   // attach handlers to an Express app
-  slapp.attachToExpress(require('express')()).listen(process.env.PORT)
+  slapp.attachToExpress(require('express')()).listen(process.env.PORT);
 
-});
+};
+
+// recursive function to load pages of teams
+function loadTeamsPage(startPage) {
+  teamsClient.list(startPage, 100, function (err, result) {
+    console.log("Loading teams page " + startPage + " of " + result.total_pages);
+    if (err) {
+      console.log("Err: " + JSON.stringify(err, null, 2));
+      process.exit(1);
+    }
+
+    if (result.results === undefined) {
+      console.log("no results: " + JSON.stringify(result, null, 2));
+      process.exit(1);
+    }
+
+    result.results.forEach(function (teamInfo) {
+      console.log("Found team " + teamInfo.slack_team_id + " - " + teamInfo.slack_team_name);
+      addTeam(teamInfo);
+    });
+
+    if (startPage < result.total_pages) {
+      loadTeamsPage(startPage + 1);
+    } else {
+      launchSlackApp();
+    }
+  });
+}
+
+loadTeamsPage(1);
