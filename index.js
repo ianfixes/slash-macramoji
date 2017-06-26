@@ -1,7 +1,7 @@
 var teamsClient = require("beepboop-teams")();
 var macraTeam = require("./macrateam");
 
-var Slapp = require('slapp')
+var Slapp = require('slapp');
 var BeepBoopContext = require('slapp-context-beepboop')
 if (!process.env.PORT) throw Error('PORT missing but required')
 
@@ -18,8 +18,8 @@ var removeTeam = function (teamId) {
   delete teams[teamId];
 };
 
-// TODO: pagination
-teamsClient.list(0, 1000, function (err, result) {
+// TODO: pagination. Our one millionth subscriber will be ignored
+teamsClient.list(0, 1000000, function (err, result) {
   if (err) {
     console.log("Err: " + JSON.stringify(err, null, 2));
     process.exit(1);
@@ -36,15 +36,27 @@ teamsClient.list(0, 1000, function (err, result) {
   });
 
   // slapp stuff
-
   slapp.command('/macramoji', (msg, cmd) => {
     // console.log("OK macramoji! `" + cmd + "` " + JSON.stringify(Object.keys(msg), null, 2));
 
     if (cmd === "" || cmd === "help") {
+      var blurb = "I create emoji on demand based on a set of macros. " +
+        "Try typing `/macramoji (:joy:)intensifies` to see one"
+      var helpUrl = "https://github.com/ifreecarve/macramoji"
       msg.respond({
         response_type: "ephemeral",
-        text: "I create emoji on demand based on a set of macros. " +
-        "Try typing `/macramoji (:joy:)intensifies` to see."
+        text: blurb + ".",
+        attachments: [{
+          "fallback": "Visit " + helpUrl + " for more information",
+          "color": "#36a64f",
+          //"pretext": blurb,
+          "author_name": "Ian Katz",
+          "author_link": "https://github.com/ifreecarve",
+          "title": "Macramoji Github README",
+          "title_link": helpUrl,
+          "text": "Information on using macramoji, including the list of macros and syntax.",
+          "footer": "(pull requests welcome)",
+        }]
       });
       return;
     }

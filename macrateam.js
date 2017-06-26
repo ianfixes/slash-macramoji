@@ -25,7 +25,7 @@ module.exports = function MacraTeam(teamInfo) {
     });
   }
 
-  var emojiStore = new macramoji.EmojiStore(emojiFetchFn, 0); // 0 for no automatic refresh. TODO: daily?
+  var emojiStore = new macramoji.EmojiStore(emojiFetchFn, 86400); // TOS 6.1: you should refresh the cache daily
   var processor = new macramoji.EmojiProcessor(emojiStore, macramoji.defaultMacros);
 
   // tell the user something went wrong
@@ -40,7 +40,6 @@ module.exports = function MacraTeam(teamInfo) {
   var uploadFile = function(slackResp, channelId, respondFn) {
     var path = slackResp.imgResult.imgPath();
     gm(path).format(function (err, fmt) {
-      console.log("this is upload to channel " + channelId);
       var format = err ? 'gif' : fmt;
       var fileName = slackResp.fileDesc + "." + format;
 
@@ -53,7 +52,7 @@ module.exports = function MacraTeam(teamInfo) {
 
       bot.files.upload(fileName, streamOpts, function handleStreamFileUpload(err, res) {
         // if (err) console.log("handleStreamFileUpload err: " + JSON.stringify(err, null, 2));
-        console.log("handleStreamFileUpload res: " + JSON.stringify(res, null, 2));
+        // console.log("handleStreamFileUpload res: " + JSON.stringify(res, null, 2));
 
         if (res.error === "invalid_channel") {
           replyPrivate(respondFn, "I can't upload here.  Try this in a public channel or, DM me.");
