@@ -29,10 +29,10 @@
   "homepage": "https://github.com/ifreecarve/slash-macramoji#readme",
   "dependencies": {
     "@slack/client": "^3.10.0",
-    "botkit": "^0.5.4",
+    "beepboop-js-teams": "git@github.com:ifreecarve/beepboop-js-teams.git",
+    "express": "^4.15.3",
     "gm": "^1.23.0",
-    "macramoji": "^0.1.5",
-    "slack-express": "^5.8.0",
+    "macramoji": "^0.1.6",
     "slapp": "^2.4.1",
     "slapp-context-beepboop": "^1.4.0"
   }
