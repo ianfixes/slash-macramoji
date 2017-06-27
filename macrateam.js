@@ -28,38 +28,6 @@ module.exports = function MacraTeam(teamInfo) {
   var emojiStore = new macramoji.EmojiStore(emojiFetchFn, 86400); // TOS 6.1: you should refresh the cache daily
   var processor = new macramoji.EmojiProcessor(emojiStore, macramoji.defaultMacros);
 
-  // tell the user something went wrong
-  var replyPrivate = function (respondFn, text) {
-    respondFn({
-      text: text,
-      response_type: "ephemeral"
-    }, function (err, data) { });
-  }
-
-  // File upload via file param
-  var uploadFile = function(slackResp, channelId, respondFn) {
-    var path = slackResp.imgResult.imgPath();
-    gm(path).format(function (err, fmt) {
-      var format = err ? 'gif' : fmt;
-      var fileName = slackResp.fileDesc + "." + format;
-
-      var streamOpts = {
-        file: fs.createReadStream(path),
-        title: slackResp.fileDesc,
-        filetype: format,
-        channels: channelId,
-      };
-
-      bot.files.upload(fileName, streamOpts, function handleStreamFileUpload(err, res) {
-        // if (err) console.log("handleStreamFileUpload err: " + JSON.stringify(err, null, 2));
-        // console.log("handleStreamFileUpload res: " + JSON.stringify(res, null, 2));
-
-        if (res.error === "invalid_channel") {
-          replyPrivate(respondFn, "I can't upload here.  Try this in a public channel or, DM me.");
-        }
-      });
-    });
-  }
 
   self.info = teamInfo;
 
@@ -79,12 +47,7 @@ module.exports = function MacraTeam(teamInfo) {
   self.processMessage = function (inputText, respondFn, channelId) {
     // sends a response to the Slack user
     processor.process(inputText.trim(), function (slackResp) {
-      if (slackResp.message) {
-        replyPrivate(respondFn, slackResp.message);
-      } else if (slackResp.imgResult) {
-        // WE APPARENTLY DO NOT NEED ACK { reponse_type: in_channel } IN THIS FRAMEWORK
-        uploadFile(slackResp, channelId, respondFn);
-      }
+      slackResp.respondBeepBoopSlashCommand(channelId, bot, respondFn);
     });
   }
 
