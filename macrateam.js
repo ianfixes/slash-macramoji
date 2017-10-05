@@ -4,6 +4,9 @@ var gm = require("gm");
 var macramoji = require('macramoji');
 var WebClient = require('@slack/client').WebClient;
 
+// define the Macramoji functionality for a single Slack team
+// (in a self-contained way)
+// Essentially, we just set up the team-specific emoji functions and storage
 module.exports = function MacraTeam(teamInfo) {
 
   var self = {};
