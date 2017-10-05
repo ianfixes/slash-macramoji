@@ -1,14 +1,16 @@
 name: Macramoji
 author: Ian Katz
+#author_avatar: resources/author_avatar.png
 email: ianfixes@gmail.com
 description: Create slack emoji macromagically
-avatar: macramoji_app_icon.png
+avatar: resources/macramoji_app_icon.png
+# 1500x500
+background: resources/macramoji_background.png
 slackscopes:
   - bot
   - commands
   - files:write:user
   - emoji:read
-#background: resources/background.png
 #config:
 #  - name: OPTION
 #    friendly_name: Some Unnecessary Option
@@ -19,6 +21,8 @@ slackscopes:
 #    info: This is an secret option
 #    type: secret
 #    default: not secret though
+
+# thumbnails are 4x3
 #screenshots:
 #  - screenshot: resources/screenshot1.png
 #  - screenshot: resources/screenshot2.jpg
