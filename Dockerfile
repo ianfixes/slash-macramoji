@@ -3,7 +3,7 @@ RUN apt-get update && apt-get install -y \
    graphicsmagick \
    imagemagick
 WORKDIR /
-RUN git clone https://github.com/ifreecarve/macramoji.git
+RUN git clone https://github.com/ianfixes/macramoji.git
 WORKDIR /macramoji
 RUN npm install && npm run coverage
 WORKDIR /usr/src/app

@@ -26,7 +26,7 @@ var launchSlackApp = function () {
     if (cmd === "" || cmd === "help") {
       var blurb = "I create emoji on demand based on a set of macros. " +
         "Try typing `/macramoji (:joy:)intensifies` to see one"
-      var helpUrl = "https://github.com/ifreecarve/macramoji"
+      var helpUrl = "https://github.com/ianfixes/macramoji"
       msg.respond({
         response_type: "ephemeral",
         text: blurb + ".",
@@ -35,7 +35,7 @@ var launchSlackApp = function () {
           "color": "#36a64f",
           //"pretext": blurb,
           "author_name": "Ian Katz",
-          "author_link": "https://github.com/ifreecarve",
+          "author_link": "https://github.com/ianfixes",
           "title": "Macramoji Github README",
           "title_link": helpUrl,
           "text": "Information on using macramoji, including the list of macros and syntax.",

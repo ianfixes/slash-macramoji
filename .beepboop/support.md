@@ -23,10 +23,10 @@ For example:
 /macramoji (:joy:)intensifies
 ```
 
-The list of defined emoji macros can be found here: https://github.com/ifreecarve/macramoji#defined-macros
+The list of defined emoji macros can be found here: https://github.com/ianfixes/macramoji#defined-macros
 
 ## Support
 
-Email ifreecarve@gmail.com with any support or feedback.
+Email ianfixes@gmail.com with any support or feedback.
 
 Thanks!
